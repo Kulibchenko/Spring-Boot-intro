@@ -2,6 +2,7 @@ package com.example.springboot;
 
 import com.example.springboot.model.Book;
 import com.example.springboot.service.BookService;
+import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +24,8 @@ public class SpringBootIntroApplication {
             Book book = new Book();
             book.setAuthor("Taras");
             book.setTitle("Kobzar");
+            book.setIsbn("2742");
+            book.setPrice(BigDecimal.valueOf(100));
             bookService.save(book);
             System.out.println(bookService.findAll());
         };
