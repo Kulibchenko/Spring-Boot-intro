@@ -3,6 +3,7 @@ package com.example.springboot.dto;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.math.BigDecimal;
 import lombok.Data;
 
 @Data
@@ -18,7 +19,7 @@ public class CreateBookRequestDto {
     private String isbn;
     @NotNull
     @Min(value = 0)
-    private String price;
+    private BigDecimal price;
     private String description;
     private String coverImage;
 }
