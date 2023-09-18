@@ -2,7 +2,7 @@ package com.example.springboot.service;
 
 import com.example.springboot.dto.UserRegistrationRequestDto;
 import com.example.springboot.dto.UserRegistrationResponseDto;
-import com.example.springboot.exception.RegistrarionException;
+import com.example.springboot.exception.RegistrationException;
 import com.example.springboot.mapper.RegistrationUserMapper;
 import com.example.springboot.model.Role;
 import com.example.springboot.model.User;
@@ -22,9 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserRegistrationResponseDto register(UserRegistrationRequestDto request)
-            throws RegistrarionException {
+            throws RegistrationException {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new RegistrarionException("Unable to complete registration");
+            throw new RegistrationException("Unable to complete registration, user already exist");
         }
         User user = new User();
         user.setPassword(passwordEncoder.encode(request.getPassword()));

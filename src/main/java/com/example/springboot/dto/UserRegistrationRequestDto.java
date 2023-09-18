@@ -1,7 +1,7 @@
 package com.example.springboot.dto;
 
 import com.example.springboot.lib.FieldsValueMatch;
-import com.example.springboot.lib.ValidEmail;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import lombok.Data;
         message = "Passwords do not match!"
 )
 public class UserRegistrationRequestDto {
-    @ValidEmail
+    @Email(message = "Invalid email format")
     private String email;
     @Size(min = 8, max = 40)
     private String password;
