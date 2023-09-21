@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-books-categories-table
+      author: kulibchenko
+      changes:
+        - createTable:
+            tableName: books-categories
+            columns:
+              - column:
+                  name: books_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category_id
+                  type: bigint
+                  constraints:
+                    nullable: false

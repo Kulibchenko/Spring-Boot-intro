@@ -50,7 +50,6 @@ public class BookController {
     @Operation(summary = "Create a book", description = "Create a new book")
     @PostMapping
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
-        System.out.println("Create book");
         return bookService.save(requestDto);
     }
 

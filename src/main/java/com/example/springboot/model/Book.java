@@ -2,13 +2,17 @@ package com.example.springboot.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -33,4 +37,6 @@ public class Book {
     private String description;
     @Column(name = "cover_image")
     private String coverImage;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Category> categories;
 }
