@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -34,6 +35,12 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryMapper.toModel(requestDto);
         category.setId(id);
         return categoryMapper.toDto(categoryRepository.save(category));
+    }
+
+    @Override
+    public CategoryDto getById(Long id) {
+        Optional<Category> category = categoryRepository.findById(id);
+        return categoryMapper.toDto(category.get());
     }
 
     @Override

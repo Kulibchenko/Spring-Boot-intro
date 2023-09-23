@@ -1,7 +1,10 @@
 package com.example.springboot.controller;
 
+import com.example.springboot.dto.BookDto;
+import com.example.springboot.dto.BookDtoWithoutCategoryIds;
 import com.example.springboot.dto.CategoryDto;
 import com.example.springboot.dto.CreateCategoryRequestDto;
+import com.example.springboot.service.BookService;
 import com.example.springboot.service.CategoryService;
 import javax.validation.Valid;
 import java.util.List;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/categories")
 public class CategoriesController {
     private final CategoryService categoryService;
+    private final BookService bookService;
 
     @GetMapping
     public List<CategoryDto> getAll() {
@@ -45,6 +49,10 @@ public class CategoriesController {
         return categoryService.update(id, requestDto);
     }
 
+    @GetMapping(value = "/{id}/books")
+    public List<BookDtoWithoutCategoryIds> getBooksByCategoryId(@PathVariable Long id) {
+        return bookService.findAllByCategory(id);
+    }
 
 
 

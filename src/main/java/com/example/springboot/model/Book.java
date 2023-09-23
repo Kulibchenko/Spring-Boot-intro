@@ -37,6 +37,7 @@ public class Book {
     private String description;
     @Column(name = "cover_image")
     private String coverImage;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @Column(name = "categories")
     private Set<Category> categories;
 }

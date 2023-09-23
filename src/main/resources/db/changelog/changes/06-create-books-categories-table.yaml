@@ -4,15 +4,15 @@ databaseChangeLog:
       author: kulibchenko
       changes:
         - createTable:
-            tableName: books-categories
+            tableName: books_categories
             columns:
               - column:
-                  name: books_id
+                  name: book_id
                   type: bigint
                   constraints:
                     nullable: false
               - column:
-                  name: category_id
+                  name: categories_id
                   type: bigint
                   constraints:
                     nullable: false
