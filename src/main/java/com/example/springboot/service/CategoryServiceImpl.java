@@ -5,11 +5,10 @@ import com.example.springboot.dto.CreateCategoryRequestDto;
 import com.example.springboot.mapper.CategoryMapper;
 import com.example.springboot.model.Category;
 import com.example.springboot.repository.category.CategoryRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service

@@ -4,7 +4,6 @@ import com.example.springboot.model.Category;
 import java.util.Set;
 import lombok.Data;
 
-
 @Data
 public class BookDto {
     private Long id;

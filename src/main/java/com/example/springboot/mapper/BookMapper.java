@@ -9,8 +9,6 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-import java.util.Set;
-
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
     BookDto toDto(Book book);
