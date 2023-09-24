@@ -39,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryDto getById(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
-        return categoryMapper.toDto(category.get());
+        return category.map(categoryMapper::toDto).orElse(null);
     }
 
     @Override

@@ -41,6 +41,9 @@ public class User implements UserDetails {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
+    public User() {
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;

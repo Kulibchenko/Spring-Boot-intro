@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/categories")
-public class CategoriesController {
+public class CategoryController {
     private final CategoryService categoryService;
     private final BookService bookService;
 
