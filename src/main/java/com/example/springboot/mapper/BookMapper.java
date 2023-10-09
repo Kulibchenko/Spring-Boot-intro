@@ -5,12 +5,9 @@ import com.example.springboot.dto.BookDto;
 import com.example.springboot.dto.BookDtoWithoutCategoryIds;
 import com.example.springboot.dto.CreateBookRequestDto;
 import com.example.springboot.model.Book;
-import com.example.springboot.repository.book.BookRepository;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(config = MapperConfig.class)
 public interface BookMapper {
@@ -23,12 +20,5 @@ public interface BookMapper {
     @AfterMapping
     default void setCategoryIds(@MappingTarget BookDto bookDto, Book book) {
         bookDto.setCategories(book.getCategories());
-    }
-
-    @Named("bookFromId") default Book bookFromId(Long id) {
-
-
-
-        return null;
     }
 }

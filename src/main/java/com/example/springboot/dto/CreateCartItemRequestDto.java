@@ -1,6 +1,5 @@
 package com.example.springboot.dto;
 
-import com.example.springboot.model.Book;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

@@ -1,8 +1,7 @@
 package com.example.springboot.dto;
 
-import lombok.Data;
-
 import java.util.Set;
+import lombok.Data;
 
 @Data
 public class ShoppingCartDto {

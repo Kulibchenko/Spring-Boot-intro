@@ -8,6 +8,7 @@ import com.example.springboot.mapper.CartItemMapper;
 import com.example.springboot.mapper.ShoppingCartMapper;
 import com.example.springboot.model.CartItem;
 import com.example.springboot.model.ShoppingCart;
+import com.example.springboot.repository.book.BookRepository;
 import com.example.springboot.repository.cartitem.CartItemRepository;
 import com.example.springboot.repository.shoppingcart.ShoppingCartRepository;
 import java.util.Optional;
@@ -19,19 +20,22 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class ShoppingCartServiceImpl implements ShoppingCartService{
+public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final CartItemRepository cartItemRepository;
     private final CartItemMapper cartItemMapper;
     private final ShoppingCartMapper shoppingCartMapper;
+    private final BookRepository bookRepository;
 
     @Override
     public CartItemDto save(CreateCartItemRequestDto requestDto, Long id) {
-        CartItem cartItem = cartItemMapper.toModel(requestDto);
         Optional<ShoppingCart> shoppingCart = shoppingCartRepository.findByUserId(id);
         if (shoppingCart.isPresent()) {
-            cartItem.setShoppingCart(shoppingCart.get());
-            return cartItemMapper.toDto(cartItemRepository.save(cartItem));
+            CartItem cartItem = cartItemMapper.toModel(requestDto);
+            if (bookRepository.findById(cartItem.getBook().getId()).isPresent()) {
+                cartItem.setShoppingCart(shoppingCart.get());
+                return cartItemMapper.toDto(cartItemRepository.save(cartItem));
+            }
         }
         return null;
     }
@@ -55,10 +59,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
             Set<CartItemDto> cartItemsDto = cartItemRepository.findAllByShoppingCartId(id).stream()
                     .map(cartItemMapper::toDto)
                     .collect(Collectors.toSet());
-           ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
-           shoppingCartDto.setId(id);
-           shoppingCartDto.setCartItemsDto(cartItemsDto);
-           return shoppingCartDto;
+            ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
+            shoppingCartDto.setId(id);
+            shoppingCartDto.setCartItemsDto(cartItemsDto);
+            return shoppingCartDto;
         }
         return null;
     }
