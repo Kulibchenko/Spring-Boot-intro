@@ -7,7 +7,7 @@ import com.example.springboot.dto.UpdateCartItemRequestDto;
 import org.springframework.data.domain.Pageable;
 
 public interface ShoppingCartService {
-    CartItemDto save(CreateCartItemRequestDto requestDto, Long id);
+    CartItemDto addToCart(CreateCartItemRequestDto requestDto, Long id);
 
     CartItemDto update(Long id, UpdateCartItemRequestDto requestDto);
 

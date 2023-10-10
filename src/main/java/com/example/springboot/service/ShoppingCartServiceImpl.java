@@ -28,16 +28,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final BookRepository bookRepository;
 
     @Override
-    public CartItemDto save(CreateCartItemRequestDto requestDto, Long id) {
+    public CartItemDto addToCart(CreateCartItemRequestDto requestDto, Long id) {
         Optional<ShoppingCart> shoppingCart = shoppingCartRepository.findByUserId(id);
+        CartItem cartItem = cartItemMapper.toModel(requestDto);
         if (shoppingCart.isPresent()) {
-            CartItem cartItem = cartItemMapper.toModel(requestDto);
             if (bookRepository.findById(cartItem.getBook().getId()).isPresent()) {
                 cartItem.setShoppingCart(shoppingCart.get());
                 return cartItemMapper.toDto(cartItemRepository.save(cartItem));
             }
         }
-        return null;
+        return cartItemMapper.toDto(cartItem);
     }
 
     @Override
@@ -54,16 +54,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCartDto getById(Pageable pageable, Long id) {
-        Optional<ShoppingCart> optionalShoppingCart = shoppingCartRepository.findByUserId(id);
-        if (optionalShoppingCart.isPresent()) {
-            Set<CartItemDto> cartItemsDto = cartItemRepository.findAllByShoppingCartId(id).stream()
-                    .map(cartItemMapper::toDto)
-                    .collect(Collectors.toSet());
-            ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
-            shoppingCartDto.setId(id);
-            shoppingCartDto.setCartItemsDto(cartItemsDto);
-            return shoppingCartDto;
-        }
-        return null;
+        Set<CartItemDto> cartItemsDto = cartItemRepository.findAllByShoppingCartId(id).stream()
+                .map(cartItemMapper::toDto)
+                .collect(Collectors.toSet());
+        ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
+        shoppingCartDto.setId(id);
+        shoppingCartDto.setCartItemsDto(cartItemsDto);
+        return shoppingCartDto;
     }
 }

@@ -34,11 +34,11 @@ public class ShoppingCartController {
     @Operation(summary = "Add items", description = "Add books to shoppingCart")
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
-    public CartItemDto createCartItem(@RequestBody @Valid CreateCartItemRequestDto requestDto,
+    public CartItemDto addToCart(@RequestBody @Valid CreateCartItemRequestDto requestDto,
                                       Authentication authentication) {
         Long id = ((User) authentication
                 .getPrincipal()).getId();
-        return shoppingCartService.save(requestDto, id);
+        return shoppingCartService.addToCart(requestDto, id);
     }
 
     @Operation(summary = "Get all items", description = "Get a list of all items from shoppingCart")
