@@ -18,10 +18,11 @@ import lombok.Setter;
 public class ShoppingCart {
     @Id
     private Long id;
+
     @OneToOne
     @JoinColumn(name = "id", nullable = false)
     private User user;
+
     @OneToMany(mappedBy = "shoppingCart")
     private Set<CartItem> cartItems = new HashSet<>();
-
 }
