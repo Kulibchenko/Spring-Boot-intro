@@ -9,5 +9,6 @@ public class CreateCategoryRequestDto {
     @NotNull
     @Size(min = 2)
     private String name;
+
     private String description;
 }

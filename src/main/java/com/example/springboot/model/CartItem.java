@@ -23,12 +23,15 @@ public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "shopping_cart_id", nullable = false)
     private ShoppingCart shoppingCart;
+
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
+
     @Column(nullable = false)
     private Long quantity;
 
