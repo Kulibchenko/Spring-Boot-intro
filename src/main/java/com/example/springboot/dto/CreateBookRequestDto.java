@@ -13,15 +13,19 @@ public class CreateBookRequestDto {
     @NotNull
     @Size(min = 2)
     private String title;
+
     @NotNull
     @Size(min = 2)
     private String author;
+
     @NotNull
     @Size(min = 2)
     private String isbn;
+
     @NotNull
     @Min(value = 0)
     private BigDecimal price;
+
     private String description;
     private String coverImage;
     private Set<Category> categories;

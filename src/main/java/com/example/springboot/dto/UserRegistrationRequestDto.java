@@ -14,8 +14,10 @@ import lombok.Data;
 public class UserRegistrationRequestDto {
     @Email(message = "Invalid email format")
     private String email;
+
     @Size(min = 8, max = 40)
     private String password;
+
     private String repeatPassword;
     private String firstName;
     private String lastName;
