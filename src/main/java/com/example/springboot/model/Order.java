@@ -2,9 +2,12 @@ package com.example.springboot.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -28,10 +31,11 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private Status status;
 
     @Column(nullable = false)
@@ -50,7 +54,9 @@ public class Order {
     }
 
     public enum Status {
-
+        PENDING,
+        COMPLETED,
+        DELIVERED
     }
 
 }
