@@ -1,6 +1,5 @@
 package com.example.springboot.dto;
 
-import com.example.springboot.model.Book;
 import lombok.Data;
 
 @Data

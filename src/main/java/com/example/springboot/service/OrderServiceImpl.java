@@ -60,7 +60,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> getAllOrder(Long id) {
-        return null;
+        return orderRepository.findAll().stream()
+                .map(orderMapper::toDto)
+                .toList();
     }
 
     @Override
