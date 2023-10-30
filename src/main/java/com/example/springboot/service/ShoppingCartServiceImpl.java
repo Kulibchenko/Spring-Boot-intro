@@ -48,7 +48,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCartDto getById(Pageable pageable, Long id) {
-        Set<CartItem> allByShoppingCartId = cartItemRepository.findAllByShoppingCartId(id); //delete this
         Set<CartItemDto> cartItemsDto = cartItemRepository.findAllByShoppingCartId(id).stream()
                 .map(cartItemMapper::toDto)
                 .collect(Collectors.toSet());

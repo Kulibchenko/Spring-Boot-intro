@@ -14,7 +14,6 @@ import com.example.springboot.repository.cartitem.CartItemRepository;
 import com.example.springboot.repository.orderitem.OrderItemRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -40,9 +39,12 @@ public class OrderServiceImpl implements OrderService {
         order.setUser(user);
         order.setShippingAddress(address);
         order.setStatus(Order.Status.PENDING);
-        Set<CartItem> allByShoppingCartId = cartItemRepository.findAllByShoppingCartId(userId);
+        Set<CartItem> cartItems = cartItemRepository.findAllByShoppingCartId(userId);
+        if (cartItems.isEmpty()) {
+            throw new EntityNotFoundException("Shopping cart is empty");
+        }
         Set<OrderItem> orderItems;
-        orderItems = allByShoppingCartId.stream()
+        orderItems = cartItems.stream()
                         .map(item -> {
                             OrderItem orderItem = new OrderItem();
                             orderItem.setOrder(order);
@@ -53,14 +55,15 @@ public class OrderServiceImpl implements OrderService {
                         })
                         .collect(Collectors.toSet());
         order.setOrderItems(orderItems);
-        BigDecimal setTotal = allByShoppingCartId.stream()
+        BigDecimal setTotal = cartItems.stream()
                 .map(i -> i.getBook().getPrice())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         order.setTotal(setTotal);
         order.setOrderDate(LocalDateTime.now());
         Order savedOrder = orderRepository.save(order);
         orderItemRepository.saveAll(orderItems);
-        //Clear ShoppingCart
+        cartItems.stream()
+                .forEach(cartItemRepository::delete);
         return orderMapper.toDto(savedOrder);
     }
 
@@ -95,12 +98,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void update(Long id) {
-
-    }
-
-    @Override
-    public OrderDto getById(Long userId) {
-        return null;
+    public Order.Status update(Long orderId, Order.Status status) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if (order.isPresent()) {
+            order.get().setStatus(status);
+            orderRepository.save(order.get());
+            return status;
+        }
+        throw new EntityNotFoundException("Can't find order with id " + orderId);
     }
 }
