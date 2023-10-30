@@ -5,13 +5,15 @@ import com.example.springboot.dto.OrderItemDto;
 import java.util.List;
 
 public interface OrderService {
-    OrderDto completeOrder(Long id, String address);
+    OrderDto completeOrder(Long userId, String address);
 
-    List<OrderDto> getAllOrder(Long id);
+    List<OrderDto> getAllOrder(Long userId);
 
-    void update(Long id);
+    void update(Long order);
 
-    OrderDto getById(Long id);
+    OrderDto getById(Long userId);
 
-    OrderItemDto getOrderItem(Long orderId, Long id);
+    OrderItemDto getOrderItem(Long orderId, Long itemId, Long userId);
+
+    List<OrderItemDto> getOrderItems(Long orderId, Long userId);
 }
