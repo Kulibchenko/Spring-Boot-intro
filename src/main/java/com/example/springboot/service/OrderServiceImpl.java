@@ -45,14 +45,7 @@ public class OrderServiceImpl implements OrderService {
         }
         Set<OrderItem> orderItems;
         orderItems = cartItems.stream()
-                        .map(item -> {
-                            OrderItem orderItem = new OrderItem();
-                            orderItem.setOrder(order);
-                            orderItem.setBook(item.getBook());
-                            orderItem.setPrice(item.getBook().getPrice());
-                            orderItem.setQuantity(item.getQuantity());
-                            return orderItem;
-                        })
+                        .map(item -> orderParser(item, order))
                         .collect(Collectors.toSet());
         order.setOrderItems(orderItems);
         BigDecimal setTotal = cartItems.stream()
@@ -62,8 +55,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderDate(LocalDateTime.now());
         Order savedOrder = orderRepository.save(order);
         orderItemRepository.saveAll(orderItems);
-        cartItems.stream()
-                .forEach(cartItemRepository::delete);
+        cartItemRepository.deleteAll(cartItems);
         return orderMapper.toDto(savedOrder);
     }
 
@@ -106,5 +98,14 @@ public class OrderServiceImpl implements OrderService {
             return status;
         }
         throw new EntityNotFoundException("Can't find order with id " + orderId);
+    }
+
+    private OrderItem orderParser(CartItem cartItem, Order order) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setOrder(order);
+        orderItem.setBook(cartItem.getBook());
+        orderItem.setPrice(cartItem.getBook().getPrice());
+        orderItem.setQuantity(cartItem.getQuantity());
+        return orderItem;
     }
 }
