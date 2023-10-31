@@ -6,7 +6,6 @@ import com.example.springboot.dto.ShoppingCartDto;
 import com.example.springboot.dto.UpdateCartItemRequestDto;
 import com.example.springboot.model.User;
 import com.example.springboot.service.ShoppingCartService;
-import com.example.springboot.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -29,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/cart")
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
-    private final UserService userService;
 
     @Operation(summary = "Add items", description = "Add books to shoppingCart")
     @PreAuthorize("hasRole('ROLE_USER')")
